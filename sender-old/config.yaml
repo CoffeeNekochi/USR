@@ -1,0 +1,45 @@
+# 攝像頭配置
+cameras:
+  # 本地攝像頭
+  local_cam1:
+    source: 0
+    fps: 30
+    width: 1280
+    height: 720
+    enabled: true
+    
+  local_cam2:
+    source: 1
+    fps: 30
+    width: 1280
+    height: 720
+    enabled: false  # 預設禁用
+    
+  # 網絡串流
+  ip_cam1:
+    source: "http://5glabdb.fcu.edu.tw/live/live/IE/IE.m3u8"
+    fps: 30
+    enabled: true
+    
+  ip_cam2:
+    source: "rtsp://example.com/stream2"
+    fps: 30
+    enabled: false
+
+# YOLO配置
+yolo:
+  model_path: "yolov8n.pt"
+  confidence_threshold: 0.5
+  num_threads: 4
+  device: "cuda"  # 或 "cpu"
+
+# 串流配置
+stream:
+  host: "0.0.0.0"
+  port: 5000
+  buffer_size: 30
+  jpeg_quality: 95
+
+# 全局配置
+debug: false
+log_level: "INFO" 
