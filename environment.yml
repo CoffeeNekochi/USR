@@ -1,0 +1,13 @@
+name: USR
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - opencv
+  - pip
+  - pip:
+    - numpy
+    - pillow
+    - requests
+    - tqdm 

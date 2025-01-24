@@ -1,0 +1,29 @@
+整體思路是「Windows + GPU 端」負責多路 RTSP 串流接入並進行行人偵測與結果視覺化（繪製 BBox 等），之後將統計資訊（行人 count、時間、地點等）以及偵測後的影像主動傳送至「Linux 虛擬機器端」，再由虛擬機器端做進一步的接收、存儲（資料庫或檔案系統）與應用。
+
+1. 開發環境與系統規劃
+Windows 實體機（或工作站）
+
+GPU: 建議 NVIDIA GPU（如 RTX 系列）以支援 CUDA 加速。
+Python 開發環境:
+Anaconda / Miniconda (方便管理虛擬環境)
+需要的套件：PyTorch / TensorFlow（依YOLO版本需求）、OpenCV、pycuda 或加速相關函式庫、以及各種常見工具庫（numpy、requests、pydantic 等）
+主要任務:
+接收多路 RTSP 串流（可使用 OpenCV 或 GStreamer）
+使用 YOLOv11n（或替代之 YOLO 版本）進行行人偵測
+畫框（BBox）並即時計數（count）
+將「偵測結果圖 + 行人count + 時間戳 + 地點資訊」傳送出去
+Linux 虛擬機器（VM）
+
+作業系統: 可能是 Ubuntu / Debian / CentOS 等
+安全協定: 需要根據組織政策或已規劃好的安全協定 (如 VPN、SSH 隧道、HTTPS TLS、Zero Trust 等)
+主要任務:
+對外暴露一個 API（或 WebSocket）/ 消息接收端，負責接收來自 Windows 端傳送的資料
+即時存儲（選擇資料庫或檔案系統）
+後續進行紀錄管理、報表產出，甚至進行二次分析
+
+系統資訊:
+python_version: 3.8.20 (default, Oct  3 2024, 15:19:54) [MSC v.1929 64 bit (AMD64)]
+pytorch_version: 2.4.1
+cuda_available: True
+gpu_name: NVIDIA GeForce RTX 4070 Ti
+platform: Windows-10-10.0.22631-SP0
